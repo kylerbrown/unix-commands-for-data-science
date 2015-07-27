@@ -1,0 +1,187 @@
+% cheatsheet template from https://tex.stackexchange.com/questions/8827/preparing-cheat-sheets
+\documentclass[10pt]{article}
+%\documentclass[10pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{textcomp}
+\usepackage[]{geometry}
+%\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\pdfinfo{
+  /Title (unix_commands_for_data_science.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Kyler Brown)
+  /Subject (shell)
+  /Keywords (unix, shell, data, science, cheatsheet)}
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+    }
+% Turn off header and footer
+\pagestyle{empty}
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%My Environments
+\newtheorem{example}[section]{Example}
+\usepackage[T1]{fontenc}
+\newcommand{\q}{\textquotesingle } %paste-able single quote
+\newcommand{\qq}{\char34 } %paste-able single quote
+\newcommand{\tild}{\textasciitilde \ }
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{2}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Unix commands for data science}} \\
+\end{center}
+
+\section{Manipulating input (Bash)}
+{\tt ctrl+a} \hfill cursor to beginning of line\\
+{\tt ctrl+e} \hfill cursor to {\bf e}nd of line\\
+{\tt ctrl+p} \hfill {\bf p}revious input\\
+{\tt ctrl+n} \hfill {\bf n}ext input\\
+{\tt ctrl+r} \hfill {\bf r}everse search previous commands\\
+{\tt ctrl+c} \hfill {\bf c}lose running program\\
+{\tt ctrl+u} \hfill cut from cursor to beginning of line\\
+{\tt ctrl+k} \hfill cut from cursor to end of line ({\bf k}ill)\\
+{\tt ctrl+y} \hfill paste ({\bf y}ank)\\
+{\tt TAB} \hfill autocomplete\\
+{\tt alias l="ls -ltrh"} \hfill rename common commands\\
+\section{Unix Basics}
+\subsection{Getting help}
+{\tt ls --help} \hfill prints command {\bf h}elp\\
+{\tt man rm} \hfill opens {\bf man}ual for command\\
+\subsection{Navigation}
+{\tt  ls} \hfill {\bf l}i{\bf s}t directory\\
+{\tt pwd} \hfill {\bf p}rint {\bf w}orking {\bf d}irectory\\
+{\tt mkdir child} \hfill  {\bf m}a{\bf k}e {\bf dir}ectory named ``child"\\
+{\tt cd child} \hfill {\bf c}hange {\bf d}irectory to ``child"\\
+{\tt cd ..} \hfill {\bf c}hange {\bf d}irectory to parent\\
+{\tt cd} \hfill {\bf c}hange {\bf d}irectory to home (\textasciitilde).\\
+{\tt cp file newfile} \hfill {\bf c}o{\bf p}y file\\
+{\tt rm file} \hfill {\bf r}e{\bf m}ove (delete) ``file"\\
+{\tt rmdir child} \hfill {\bf r}e{\bf m}ove empty {\bf dir}ectory ``child''\\
+{\tt find \tild  -name \qq*.csv\qq} \hfill search for files ending with "*.csv"\\
+
+\subsection{Remote}
+{\tt ssh user@example.com} \hfill remote login ({\bf s}ecure {\bf sh}ell)\\
+{\tt rsync user@example.com:file local/dir/} \hfill copy remote file\\
+{\tt wget http://example.com/data.csv} \hfill copy file from web\\
+{\tt curl -O http://example.com/data.csv} \hfill copy file from web\\
+
+\subsection{Managing Processes}
+{\tt parallel wc -w ::: *.csv} \hfill process files in parallel\\
+{\tt top} \hfill display processes\\
+{\tt ps -u} \hfill display user processes\\
+{\tt kill 1234} \hfill kill process 1234\\
+{\tt crontab -e} \hfill edit cron jobs (run a script daily/weekly/etc.)\\
+{\tt sleep 100 \&} \hfill append ``\&'' to run in background\\
+{\tt ctrl+z} \hfill stop foreground process\\
+{\tt bg} \hfill resume stopped process in {\bf b}ack{\bf g}round\\
+{\tt jobs} \hfill list running processes\\
+{\tt fg 1} \hfill bring job 1 to {\bf f}ore{\bf g}round\\
+
+\section{Data Manipulation}
+
+\subsection{Taking Subsets}
+{\tt cat data.csv} \hfill returns contents of ``data.csv''\\
+{\tt head data.csv} \hfill first ten lines of ``data.csv''\\
+{\tt tail -15 data.csv} \hfill last 15 lines of ``data.csv''\\
+{\tt cut -d\qq\  \qq -f2 data.csv} \hfill second column\\
+{\tt awk \q \{print \$2\}\q data.csv} \hfill (alt) second column\\
+{\tt grep \qq NaN\qq\  data.csv} \hfill all lines with a ``NaN"\\
+{\tt grep -v \qq NaN\qq\  data.csv} \hfill all lines \emph{without} a ``NaN"\\
+{\tt sort data.csv | uniq } \hfill only {\bf uniq}ue lines\\
+{\tt sort data.csv | uniq -d } \hfill only {\bf d}uplicate lines\\
+{\tt shuf data.csv} \hfill shuffle lines\\
+{\tt shuf data.csv | head -1} \hfill random line\\
+\subsection{Modifying Data}
+{\tt nano data.csv} \hfill opens simple text editor\\
+{\tt echo \$((123 * 456))} \hfill integer calculator\\
+{\tt bc <{}<{}< \qq 12.3 * 456\qq} \hfill calculator\\
+{\tt seq 3 11} \hfill {\bf seq}uence of numbers, inclusive\\
+{\tt for i in \{ 1..100\}; do echo \$RANDOM\qq; done} \hfill 100 random numbers between 0 and 32767\\
+{\tt for i in \{ 1..100\}; do bc <{}<{}< \qq scale=3; \$RANDOM/32767\qq; done} \hfill 100 random numbers between 0 and 1\\
+{\tt sed \q /s/,/ /g\q \ data.csv} \hfill replace string ``,'' with a space\\
+{\tt tr \q A-Z\q \q a-z\q \  < data.csv} \hfill convert letters to lowercase\\
+
+\subsection{Summarizing Data}
+{\tt sort data.csv} \hfill sort lines alphabetically\\
+{\tt sort -n -k 2 data.csv} \hfill sort lines numerically by column 2\\
+{\tt wc -w data.csv} \hfill {\bf w}ord {\bf c}ount\\
+{\tt wc -l data.csv} \hfill number of {\bf l}ines in ``data.csv''\\
+{\tt grep -c \qq NaN\qq \  data.csv} \hfill number of lines with a ``NaN''\\
+{\tt grep -o \qq NaN\qq \  data.csv | wc -l} \hfill total number of ``NaN"\\
+{\tt awk \q \{sum += \$1 \} END \{print sum\}\q\  data.csv} \hfill sum of column 1\\
+{\tt awk \q \{sum += \$3\} END \{print sum / NR\}\q\  data.csv } \hfill average of column 3\\
+{\tt awk \q \{sum+=\$2; sumsq+=\$2*\$2\}END\{print sqrt(sumsq/NR- (sum/NR)**2)\}\q \  data.csv} \hfill standard deviation of column 2\\
+{\tt awk \q \{print \$2 \}\q\  data.csv | sort -n | head -1} \hfill minimum value of column 2\\
+{\tt awk \q \{print \$2 \}\q\  data.csv | sort -n | tail -1} \hfill maximum value of column 2\\
+
+\subsection{piping ({\tt <, |, >, >{}>})}
+{\tt <{}<{}<} \hfill pass string as input to command\\
+{\tt <} \hfill use file as input to command \\
+%{\tt tr 'A-Z' 'a-z' < data.csv} \hfill convert letters from uppercase to lowercase\\
+{\tt |} \hfill pass output as input\\
+%{\tt wc -l * | sort -n | head -5} \hfill 5 smallest files\\
+{\tt > } \hfill pass output to file \\
+%{\tt grep -v "NaN" data.csv > noNaN.csv} \hfill new file without lines containing "NaN"\\
+{\tt >{}> } \hfill append output to file \\
+%{\tt echo "date, price, quantity" > data2.csv; \\cat data.csv >> data2.csv} \hfill create a new csv with a header line.\\
+
+
+\section{Rapid Visualization}
+{\tt sudo apt-get install feedgnuplot}\\
+{\tt awk \q\{print \$2\}\q\  data.csv | feedgnuplot --terminal \q dumb 80,40\q} \hfill plot column 2 in terminal\\
+{\tt awk \q\{print \$2\}\q\  data.csv | feedgnuplot -{}-line} \hfill line plot column 2\\
+{\tt awk \q\{print \$1, \$2\}\q\  data.csv | feedgnuplot -{}-domain} \hfill plot column 2 over column 1\\
+{\tt awk \q\{print \$2\}\q\  data.csv | feedgnuplot -{}-histogram -{}-with boxes -{}-binwidth 0.1} \hfill histogram of column 2\\
+
+% You can even have references
+\rule{0.3\linewidth}{0.25pt}
+\scriptsize
+\bibliographystyle{abstract}
+\bibliography{refFile}
+\end{multicols}
+\end{document}
