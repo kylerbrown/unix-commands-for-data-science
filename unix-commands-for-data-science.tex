@@ -191,10 +191,11 @@
 {\tt cut -d, -f2 data.csv | sort -n | tail -1} \hfill maximum of column 2\\
 {\tt tr \q ,\q\ \q\textbackslash n\q\ < data.csv | sort -n | tail -1} \hfill maximum of all columns\\
 
-\subsection{Generating Data}
+\subsection{Generating Numbers}
 {\tt echo \$((123 * 456))} \hfill integer calculator\\
-{\tt bc <{}<{}< \qq 12.3 * 456\qq} \hfill calculator\\
+{\tt echo \qq 12.3 * 456\qq\ | bc} \hfill calculator\\
 {\tt seq 3 11} \hfill {\bf seq}uence of numbers, inclusive\\
+{\tt echo \{3..11\}} \hfill sequence of numbers, inclusive\\
 {\tt shuf -r -i 0-100 -n 10} \hfill 10 random numbers between 0 and 100 with\\
 	\hfill replacement\\
 {\tt shuf -i 0-100 -n 10} \hfill 10 random numbers between 0 and 100 \emph{without}\\ 
