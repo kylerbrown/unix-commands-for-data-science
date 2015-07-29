@@ -140,11 +140,11 @@
 %{\tt echo "date, price, quantity" > data2.csv; \\cat data.csv >> data2.csv} \hfill create a new csv with a header line.\\
 
 \subsection{globbing}
-{\tt ls *.csv} \hfill lists files ending with ``.csv''\\
-{\tt ls d*.csv} \hfill lists files starting with ``d'' and ending with ``.csv''\\
-{\tt ls data????} \hfill lists files starting with ``data.'' followed by any 4 \\
+{\tt ls *.csv} \hfill list files ending with ``.csv''\\
+{\tt ls d*.csv} \hfill list files starting with ``d'' and ending with ``.csv''\\
+{\tt ls data????} \hfill list files starting with ``data.'' followed by any 4 \\
 	\hfill characters\\
-{\tt rm [a-z]*[0-9]} \hfill removes files starting with a letter and ending\\
+{\tt rm [a-z]*[0-9]} \hfill remove files starting with a letter and ending\\
 	\hfill in a digit \\
 
 \section{Data Manipulation}
@@ -155,25 +155,41 @@
 {\tt tail -15 data.csv} \hfill last 15 lines\\
 {\tt tail -n +2 data.csv} \hfill everything but first line (remove header)\\
 {\tt cut -d,  -f2 data.csv} \hfill second column\\
-{\tt awk -F, \q \{print \$2\}\q data.csv} \hfill second column\\
+{\tt awk -F, \q \{print \$2\}\q\ data.csv} \hfill second column\\
 {\tt cut -d,  -f2,4 data.csv} \hfill second and fourth column\\
 {\tt cut -d,  -f2 -{}-complement data.csv} \hfill everything except second column\\
 {\tt grep \qq NaN\qq\  data.csv} \hfill all lines with a ``NaN''\\
 {\tt grep -v \qq NaN\qq\  data.csv} \hfill all lines \emph{without} a ``NaN''\\
 {\tt sort data.csv | uniq } \hfill only {\bf uniq}ue lines\\
 {\tt sort data.csv | uniq -d } \hfill only {\bf d}uplicate lines\\
-{\tt shuf data.csv} \hfill shuffle lines\\
+{\tt shuf data.csv} \hfill {\bf shuf}fle lines\\
 {\tt shuf data.csv | head -1} \hfill random line\\
+
+\subsection{Transforming Data}
+{\tt nano data.csv} \hfill minimal text editor\\
+{\tt sort data.csv} \hfill sort lines alphabetically\\
+{\tt sort -t, -n -k 2 data.csv} \hfill sort lines numerically by column 2\\
+{\tt sed \q /s/,/ /g\q \ data.csv} \hfill replace string ``,'' with a space\\
+{\tt tr \q A-Z\q\ \q a-z\q \  < data.csv} \hfill convert letters to lowercase\\
+{\tt awk -F, \q\{print \$1/100\}\q\ data.csv} \hfill divide column 1 by 100\\
+{\tt awk -F, \q\{print \$1*\$2\}\q\ data.csv} \hfill multiply columns 1 and 2\\
 {\tt paste -s -d, data.csv } \hfill flatten data to row\\
 {\tt tr \q,\q\ \q \textbackslash n\q\ < data.csv} \hfill flatten data to column\\
 {\tt paste -d, data1.csv data2.csv} \hfill combines the lines of two files\\
 {\tt join -d, data1.csv data2.csv} \hfill performs a join of two files\\
 
-\subsection{Modifying Data}
-{\tt nano data.csv} \hfill minimal text editor\\
-{\tt sed \q /s/,/ /g\q \ data.csv} \hfill replace string ``,'' with a space\\
-{\tt tr \q A-Z\q \q a-z\q \  < data.csv} \hfill convert letters to lowercase\\
-
+\subsection{Summarizing Data}
+{\tt sed \q s/,/ /g\q\  data.csv | wc -w} \hfill {\bf w}ord {\bf c}ount\\
+{\tt wc -l data.csv} \hfill number of {\bf l}ines in ``data.csv''\\
+{\tt grep -c \qq NaN\qq \  data.csv} \hfill number of lines with a ``NaN''\\
+{\tt grep -o \qq NaN\qq \  data.csv | wc -l} \hfill total number of ``NaN''\\
+{\tt awk -F, \q \{sum += \$1\} END \{print sum\}\q\  data.csv} \hfill sum of column 1\\
+{\tt awk -F, \q \{sum += \$3\} END \{print sum / NR\}\q\  data.csv } \hfill average of\\
+	\hfill column 3\\
+{\tt awk -F, \q \{sum+=\$2; sumsq+=\$2*\$2\}END\{print sqrt(sumsq/NR- (sum/NR)**2)\}\q \  data.csv} \hfill standard deviation of column 2\\
+{\tt cut -d, -f2 data.csv | sort -n | head -1} \hfill minimum of column 2\\
+{\tt cut -d, -f2 data.csv | sort -n | tail -1} \hfill maximum of column 2\\
+{\tt tr \q ,\q\ \q\textbackslash n\q\ < data.csv | sort -n | tail -1} \hfill maximum of all columns\\
 
 \subsection{Generating Data}
 {\tt echo \$((123 * 456))} \hfill integer calculator\\
@@ -183,21 +199,6 @@
 	\hfill replacement\\
 {\tt shuf -i 0-100 -n 10} \hfill 10 random numbers between 0 and 100 \emph{without}\\ 
 	\hfill replacement\\
-
-\subsection{Summarizing Data}
-{\tt sort data.csv} \hfill sort lines alphabetically\\
-{\tt sort -t, -n -k 2 data.csv} \hfill sort lines numerically by column 2\\
-{\tt sed \q s/,/ /g\q\ | wc -w data.csv} \hfill {\bf w}ord {\bf c}ount\\
-{\tt wc -l data.csv} \hfill number of {\bf l}ines in ``data.csv''\\
-{\tt grep -c \qq NaN\qq \  data.csv} \hfill number of lines with a ``NaN''\\
-{\tt grep -o \qq NaN\qq \  data.csv | wc -l} \hfill total number of ``NaN''\\
-{\tt awk -F, \q \{sum += \$1\} END \{print sum\}\q\  data.csv} \hfill sum of column 1\\
-{\tt awk -F, \q \{sum += \$3\} END \{print sum / NR\}\q\  data.csv } \hfill average of\\
-	\hfill column 3\\
-{\tt awk -F, \q \{sum+=\$2; sumsq+=\$2*\$2\}END\{print sqrt(sumsq/NR- (sum/NR)**2)\}\q \  data.csv} \hfill standard deviation of column 2\\
-{\tt cut -d -f2 data.csv | sort -n | head -1} \hfill minimum of column 2\\
-{\tt cut -d, -f2 data.csv | sort -n | tail -1} \hfill maximum of column 2\\
-{\tt tr \q ,\q\ \q\textbackslash n\q\ < data.csv | sort -n | tail -1} \hfill maximum of all columns\\
 
 \section{Rapid Visualization with \href{https://github.com/dkogan/feedgnuplot}{feedgnuplot}}
 {\tt sudo apt-get install feedgnuplot}\\
