@@ -203,11 +203,11 @@
 
 \section{Rapid Visualization with \href{https://github.com/dkogan/feedgnuplot}{feedgnuplot}}
 {\tt sudo apt-get install feedgnuplot}\\
-{\tt cut -d, -f2  data.csv | feedgnuplot -{}-terminal \q dumb\q} \hfill plot column 2\\
-	\hfill in terminal\\
+{\tt cut -d, -f2 data.csv | feedgnuplot -{}-terminal \q dumb\q} \\
+	\hfill plot column 2 in terminal\\
 {\tt  cut -d, -f2  data.csv | feedgnuplot -{}-line} \hfill line plot column 2\\
-{\tt awk -d \q\{print \$3, \$2\}\q\  data.csv | feedgnuplot -{}-domain} \hfill plot \\
-	\hfill 2 over column 3\\
+{\tt awk -F, \q\{print \$3, \$2\}\q\  data.csv | feedgnuplot -{}-domain} \\
+	\hfill plot column 2 over column 3\\
 {\tt cut -d, -f2   data.csv | feedgnuplot -{}-histogram -{}-with boxes}\\
 	\hfill histogram of column 2\\
 
