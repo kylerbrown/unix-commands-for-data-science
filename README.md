@@ -1,6 +1,6 @@
 # unix commands for data science cheat sheet
 
-A list of useful unix commands for data science. Since unix has been designed from the beginning as an operating system for scientists working with data, this cheatsheet could probably just be called "unix commands".
+A list of useful unix commands for data science. Since unix has been designed from the beginning as an operating system for working with data, this cheatsheet could probably just be called "unix commands".
 
 Commands tested with GNU coreutils 8.21, Bash 4.3.11, feedgnuplot 1.32, gnuplot 4.6.
 
