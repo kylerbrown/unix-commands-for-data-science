@@ -4,15 +4,7 @@ A list of useful unix commands for data science. Since unix has been designed fr
 
 Commands tested with GNU coreutils 8.21, Bash 4.3.11, feedgnuplot 1.32, gnuplot 4.6.
 
-This cheat sheet assumes data are comma separated, for other delimiters make the following adjustment:
-
-    cut -d "DELIM"
-    paste -d "DELIM"
-    join -d "DELIM"
-    sort -t "DELIM"
-    awk -F "DELIM"
 Pull requests/issues welcome.
-
 
 [pdf](https://github.com/kylerbrown/unix-commands-for-data-science/raw/master/unix-commands-for-data-science.pdf)
 
